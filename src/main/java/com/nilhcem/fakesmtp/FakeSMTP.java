@@ -87,6 +87,15 @@ public final class FakeSMTP {
 
 					System.setProperty("apple.laf.useScreenMenuBar", "true");
 					System.setProperty("com.apple.mrj.application.apple.menu.about.name", Configuration.INSTANCE.get("application.name"));
+					// x11 fix from here - http://elliotth.blogspot.co.uk/2007/02/fixing-wmclass-for-your-java.html
+					try {
+						Toolkit xToolkit = Toolkit.getDefaultToolkit();
+						java.lang.reflect.Field awtAppClassNameField = xToolkit.getClass().getDeclaredField("awtAppClassName");
+						awtAppClassNameField.setAccessible(true);
+						awtAppClassNameField.set(xToolkit, Configuration.INSTANCE.get("application.name"));
+					} catch (Exception e) {
+						LOGGER.error("Can't set the default x11 window name", e);
+					}
 					UIManager.put("swing.boldMetal", Boolean.FALSE);
 					try {
 						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

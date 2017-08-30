@@ -1,23 +1,20 @@
 package com.nilhcem.fakesmtp;
 
-import java.awt.EventQueue;
-import java.awt.Toolkit;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
-
-import javax.swing.UIManager;
-
-import org.apache.commons.cli.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.apple.eawt.Application;
 import com.nilhcem.fakesmtp.core.ArgsHandler;
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.core.exception.UncaughtExceptionHandler;
 import com.nilhcem.fakesmtp.gui.MainFrame;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
+import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
+import java.net.InetAddress;
+import java.net.URL;
+import java.net.UnknownHostException;
 
 /**
  * Entry point of the application.
@@ -93,6 +90,8 @@ public final class FakeSMTP {
 						java.lang.reflect.Field awtAppClassNameField = xToolkit.getClass().getDeclaredField("awtAppClassName");
 						awtAppClassNameField.setAccessible(true);
 						awtAppClassNameField.set(xToolkit, Configuration.INSTANCE.get("application.name"));
+					} catch (NoSuchFieldException nsfe) {
+						LOGGER.debug("Not on x11 ??	", nsfe);
 					} catch (Exception e) {
 						LOGGER.error("Can't set the default x11 window name", e);
 					}

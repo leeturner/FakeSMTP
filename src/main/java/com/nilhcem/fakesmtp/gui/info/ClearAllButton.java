@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Insets;
+import java.awt.event.KeyEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -37,6 +39,7 @@ public final class ClearAllButton extends Observable implements Observer {
 	 */
 	public ClearAllButton() {
 		button.setToolTipText(i18n.get("clearall.tooltip"));
+		button.setMnemonic(KeyEvent.VK_C);
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
